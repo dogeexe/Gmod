@@ -1,0 +1,18 @@
+@name Basic holo Functions
+@inputs
+@outputs
+@persist
+
+interval(100)
+
+if(first()){
+
+  holoCreate(1)
+  holoModel(1,"Model directory here")
+  holoScale(1,vec(1,1,1)) 
+  holoColor(1,vec(255,255,255))
+  holoPos(1,entity():toWorld(vec(0,0,0)))
+  holoAng(1,entity():toWorld(ang(0,0,0)))
+  holoParent(1,entity())
+
+}
