@@ -1,0 +1,60 @@
+@name ACF do Doge v3.2 Last Public Version
+@inputs Pod:wirelink Motor:entity
+@outputs Throttle Gear On Brake
+@persist
+@trigger
+ 
+interval(100)
+ 
+if(first()|dupefinished()|duped()){ 
+    
+    Gear = 0
+}
+ 
+W = Pod["W",number]
+S = Pod["S",number]
+Space = Pod["Space",number]
+Alt = Pod["Alt",number]
+Ligar = Pod["R",number]
+
+# ========================== Marcha =================================
+ 
+if(W == 1)
+{ if(Gear == 6) { Gear = 1 Throttle = 100 } else { Throttle = 100 }
+}
+else
+{ Throttle = 0
+}
+ 
+if(S == 1)
+{ Gear = 6 Throttle = 100
+}
+
+# ========================= Ligar Motor ============================
+
+if (changed(Ligar) & Ligar){
+    if( On )
+    {
+        On = 0
+    }
+    else
+    {
+        Motor:soundPlay("Motor",0,"acf_extra/vehiclefx/starters/starter3.wav")
+        timer("MotorOn",1100)
+    }
+}
+if( clk("MotorOn") )
+{
+    soundStop("Motor")
+    On = 1
+}
+
+# ======================== Buzina ==================================
+
+if( changed(Alt) & Alt ){
+    Motor:soundPlay(3,0,"acf_extra/vehiclefx/horn/horn0.wav")
+}
+
+# ======================== Freio ===================================
+
+if(Space){Brake=5}else{Brake=0}
