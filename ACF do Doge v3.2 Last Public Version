@@ -1,23 +1,20 @@
 @name ACF do Doge v3.2 Last Public Version
-@inputs Pod:wirelink Motor:entity
+@inputs Pod:wirelink Engine:entity
 @outputs Throttle Gear On Brake
-@persist
-@trigger
+@persist [StartSound_Path HornSound_path]:string
  
 interval(100)
- 
-if(first()|dupefinished()|duped()){ 
-    
-    Gear = 0
-}
  
 W = Pod["W",number]
 S = Pod["S",number]
 Space = Pod["Space",number]
 Alt = Pod["Alt",number]
-Ligar = Pod["R",number]
+Start = Pod["R",number]
 
-# ========================== Marcha =================================
+StartSound_Path = "acf_extra/vehiclefx/starters/starter3.wav"
+HornSound_Path = "acf_extra/vehiclefx/horn/horn0.wav"
+
+# ========================== Gear =================================
  
 if(W == 1)
 { if(Gear == 6) { Gear = 1 Throttle = 100 } else { Throttle = 100 }
@@ -30,31 +27,31 @@ if(S == 1)
 { Gear = 6 Throttle = 100
 }
 
-# ========================= Ligar Motor ============================
+# ========================= Start Engine ============================
 
-if (changed(Ligar) & Ligar){
+if (changed(Start) & Start){
     if( On )
     {
         On = 0
     }
     else
     {
-        Motor:soundPlay("Motor",0,"acf_extra/vehiclefx/starters/starter3.wav")
-        timer("MotorOn",1100)
+        Engine:soundPlay("Engine",0,StartSound_Path)
+        timer("EngineOn",1100)
     }
 }
-if( clk("MotorOn") )
+if( clk("EngineOn") )
 {
-    soundStop("Motor")
+    soundStop("Engine")
     On = 1
 }
 
-# ======================== Buzina ==================================
+# ======================== Horn ==================================
 
 if( changed(Alt) & Alt ){
-    Motor:soundPlay(3,0,"acf_extra/vehiclefx/horn/horn0.wav")
+    Engine:soundPlay(3,0,HornSound_Path)
 }
 
-# ======================== Freio ===================================
+# ======================== Breake ===================================
 
 if(Space){Brake=5}else{Brake=0}
