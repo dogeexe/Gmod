@@ -1,0 +1,56 @@
+@name ACF do Doge v3 - Public Old Version
+@inputs W S Motor:entity Ligar Alt
+@outputs Throttle Gear On
+@persist
+@trigger
+ 
+runOnTick(1)
+
+ 
+if(first()){ 
+    
+    Gear = 1
+}
+ 
+# ========================== Aceleracao =================================
+ 
+if(W == 1)
+{ if(Gear == 6) { Gear = 1 Throttle = 100 } else { Throttle = 100 }
+}
+else
+{ Throttle = 0
+}
+ 
+if(S == 1)
+{ Gear = 6 Throttle = 100
+}
+ 
+if(dupefinished())
+{ reset()
+}
+
+# ========================= Ligar Motor ============================
+
+if (changed(Ligar) & Ligar){
+    if( On )
+    {
+        On = 0
+    }
+    else
+    {
+        Motor:soundPlay("Motor",0,"acf_extra/vehiclefx/starters/starter3.wav")
+        timer("MotorOn",1100)
+    }
+}
+if( clk("MotorOn") )
+{
+    soundStop("Motor")
+    On = 1
+}
+
+# ======================== Buzina ==================================
+
+############################!Car Horn!#########################
+if( changed(Alt) & Alt ){
+    Motor:soundPlay(3,0,"acf_extra/vehiclefx/horn/horn15.wav",0.5)
+}
