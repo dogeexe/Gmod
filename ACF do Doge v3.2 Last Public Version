@@ -1,18 +1,36 @@
-@name ACF do Doge v3.2 Last Public Version
+@name ACF Doggo v3.2 Last Public Version
 @inputs Pod:wirelink Engine:entity
 @outputs Throttle Gear On Brake
-@persist [StartSound_Path HornSound_path]:string
+@persist [StartSound_Path HornSound_path]:string BreakeForce
  
 interval(100)
- 
+
+# How to Use #
+# Link Engine:entity in your car engine.
+# Link Pod:wirelink in your PodController.
+# Link Throttle of your engine at Throttle of E2.
+# Link Active of your engine in " On " of E2.
+# Link Gear of your GearBox in Gear of E2.
+# Link Brake of your GearBox / Diffs in Brake of E2.
+
+# If the breake start glitching just place a lower value on BreakeForce ( Default = 5 ).
+# If there is any problem with e2 or Ideas to the future Versions please contact me.
+
+# Steam : http://steamcommunity.com/id/dogaumexe/
+# Discord : SadDoge.exe#3174
+
+BreakeForce = 5
+
+StartSound_Path = "acf_extra/vehiclefx/starters/starter3.wav"
+HornSound_Path = "acf_extra/vehiclefx/horn/horn0.wav"
+
 W = Pod["W",number]
 S = Pod["S",number]
 Space = Pod["Space",number]
 Alt = Pod["Alt",number]
 Start = Pod["R",number]
 
-StartSound_Path = "acf_extra/vehiclefx/starters/starter3.wav"
-HornSound_Path = "acf_extra/vehiclefx/horn/horn0.wav"
+if(first()){hint("ACF Doggo v3.2 (Last Build) By SadDoge.exe", 5),owner():soundPlay(0,1,"buttons/bell1.wav")}
 
 # ========================== Gear =================================
  
@@ -54,4 +72,4 @@ if( changed(Alt) & Alt ){
 
 # ======================== Breake ===================================
 
-if(Space){Brake=5}else{Brake=0}
+if(Space){Brake=BreakeForce}else{Brake=0}
