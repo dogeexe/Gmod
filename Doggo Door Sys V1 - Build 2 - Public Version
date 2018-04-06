@@ -74,4 +74,3 @@ if(changed(Ang) && Ang == Min)
     soundStop(1)
     entity():soundPlay(2, 0, SoundStop)
 }
-
