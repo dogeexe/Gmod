@@ -1,0 +1,77 @@
+@name Doggo Door Sys V1 - Build 2 - Public Version 
+@inputs B1 B2 Porta:entity
+@outputs Abrir
+@persist Abrir Ang
+@persist DoorMoveSpeed Min Max [SoundOpen SoundClose]:string
+@trigger 
+
+interval(100)
+
+#Doggo Door System V1
+if(first())
+{
+    hint("Doggo Door System V1 made By Doge.exe", 5)
+    owner():soundPlay(0, 1, "buttons/bell1.wav")
+    
+    DoorMoveSpeed = 2
+    Min = 0   #minimo representa a porta fechada.
+    Max = -140 #maximo representa a porta aberta podendo variar de valores negativos a positivos deprendendo do caso.#
+    SoundOpen = "doors/doormove1.wav"
+    SoundStop = "Doors.Move14"
+    
+    entity():setAlpha(255)
+}
+
+#=====================================================
+
+Porta:setPos(entity():toWorld(vec(49 - Ang, 0, -4))) 
+#para alterar a pos da porta de acordo com a situacao, edite os valores de vetor apos "(vec("
+
+#=====================================================
+
+if(changed(B1) && B1 || changed(B2) && B2)
+{
+    Abrir = !Abrir
+}
+
+if(Abrir)
+{
+    Ang -= DoorMoveSpeed
+}
+
+if(Abrir == 0)
+{
+    Ang += DoorMoveSpeed
+}
+
+if(Ang > Min)
+{
+    Ang = Min
+}
+
+if(Ang < Max)
+{
+    Ang = Max
+}
+
+if(changed(Abrir) && Abrir){
+    entity():soundPlay(1,soundDuration(SoundOpen),SoundOpen)
+}
+
+if(changed(Abrir) && Abrir == 0)
+{
+    entity():soundPlay(1,soundDuration(SoundOpen),SoundOpen)
+}
+
+if(changed(Ang) && Ang == Max)
+{
+    soundStop(1)
+    entity():soundPlay(2, 0, SoundStop)
+}
+
+if(changed(Ang) && Ang == Min)
+{
+    soundStop(1)
+    entity():soundPlay(2, 0, SoundStop)
+}
+
