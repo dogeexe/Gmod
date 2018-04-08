@@ -39,7 +39,8 @@ if(W == 1)
    if(Gear == 6) { Gear = 1 Throttle = 100 } else { Throttle = 100 }
 }
 else
-{ Throttle = 0
+{ 
+   Throttle = 0
 }
  
 if(S == 1)
