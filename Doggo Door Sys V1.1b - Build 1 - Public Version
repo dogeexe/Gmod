@@ -9,13 +9,15 @@ interval(100)
 
 #Doggo Door System V1.1b
 #Feito Por Doge.exe
-#Siga os passos para o funcionamento completo do E2
+
+#Siga os passos para o funcionamento completo do E2.
 # ** Em caso de algum bug etc.. favor entrar em contato ! **
 
 #Steam : id/dogaumexe
 #Discord : doge.exe#3174
 
 #Build 1.1b
+#Updated : 15/12/2018 - 20:03
 
 if(first())
 {
