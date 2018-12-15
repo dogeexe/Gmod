@@ -1,0 +1,111 @@
+@name Doggo Door Sys V1.1b - Build 1 - Public Version 
+@inputs B1 B2 Porta:entity
+@outputs Abrir Ang
+@persist Abrir Ang
+@persist DoorMoveSpeed Min Max [SoundOpen SoundClose]:string
+@trigger 
+
+interval(100)
+
+#Doggo Door System V1.1b
+#Feito Por Doge.exe
+#Siga os passos para o funcionamento completo do E2
+# ** Em caso de algum bug etc.. favor entrar em contato ! **
+
+#Steam : id/dogaumexe
+#Discord : doge.exe#3174
+
+#Build 1.1b
+
+if(first())
+{
+    hint("Doggo Door System V1.1b made By Doge.exe", 5)
+    owner():soundPlay(0, 1, "buttons/bell1.wav")
+    
+    #min = representa a porta fechada.
+    #max = representa a porta aberta podendo variar de valores negativos a positivos deprendendo do caso.#
+    
+    DoorMoveSpeed = 2
+    Min = 0   
+    Max = -134 
+    SoundOpen = "doors/doormove1.wav"
+    SoundStop = "k_lab.suitdoor"
+    
+    entity():setAlpha(255)
+}
+
+#=====================================================
+
+#Config de Pos da porta.
+#para alterar a pos da porta de acordo com a situacao, edite os valores de vetor apos "(vec("
+
+#Se algum imprevisto surgir ( ex : Porta abrir para direao errada etc.. ) tente alterar o sinal - para 
+# + anterior a variavel " Ang ".
+
+Porta:setPos(entity():toWorld(vec(50 - Ang, 5, -5))) 
+
+
+#=====================================================
+
+# Funcionamento da porta para Abrir / Fechar 
+
+#=====================================================
+
+if(changed(B1) && B1 || changed(B2) && B2)
+{
+    Abrir = !Abrir
+}
+
+if(Abrir)
+{
+    Ang -= DoorMoveSpeed
+}
+
+if(Abrir == 0)
+{
+    Ang += DoorMoveSpeed
+}
+
+if(Ang > Min)
+{
+    Ang = Min
+}
+
+if(Ang < Max)
+{
+    Ang = Max
+}
+
+#=====================================================
+
+# Funcionamento dos Audios ao Abrir / Fechar.
+
+#=====================================================
+
+if(changed(Abrir) & Abrir)
+{
+    
+    entity():soundPlay(1,soundDuration(SoundOpen),SoundOpen)
+    
+}
+
+if(changed(Abrir) & Abrir==0)
+{
+    
+    entity():soundPlay(1,soundDuration(SoundOpen),SoundOpen)
+    
+}
+
+if(changed(Ang) & Ang == Max)
+{
+    
+    soundStop(1) entity():soundPlay(2,0,SoundStop)
+    
+}
+
+if(changed(Ang) & Ang == Min)
+{
+    
+    soundStop(1) entity():soundPlay(2,0,SoundStop)
+    
+}
