@@ -1,2 +1,3 @@
-# gmod
-e2 , dupes and more
+# garrysmod github repository
+
+a repository for my scripts that im maded in garrysmod 
