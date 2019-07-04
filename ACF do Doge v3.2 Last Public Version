@@ -1,28 +1,39 @@
 @name ACF Doggo v3.2 Last Public Version
 @inputs Pod:wirelink Engine:entity
 @outputs Throttle Gear On Brake
-@persist [StartSound_Path HornSound_path]:string BreakeForce
+@persist [StartSound_Path HornSound_path]:string BreakForce
  
 interval(100)
 
 # How to Use #
-# Link Engine:entity in your car engine.
-# Link Pod:wirelink in your PodController.
-# Link Throttle of your engine at Throttle of E2.
-# Link Active of your engine in " On " of E2.
-# Link Gear of your GearBox in Gear of E2.
-# Link Brake of your GearBox / Diffs in Brake of E2.
+# Link the input Engine:entity in your car engine.
+# Link the input Pod:wirelink in your PodController.
+# Link the input Throttle of your engine on the output 'Throttle' of the E2.
+# Link the input 'Active' of your engine on the output 'On' of the E2.
+# Link the input 'Gear' of your GearBox in the output 'Gear' of your E2.
+# Link the input 'Brake' of your GearBox / Diffs in the output "Brake" of your E2.
 
-# If the breake start glitching just place a lower value on BreakeForce ( Default = 5 ).
-# If there is any problem with e2 or Ideas to the future Versions please contact me.
+# If the break start glitching just place a lower value on BreakForce ( Default = 5 ).
+# If there is any problem with the E2 or ideas to the future versions please contact me.
 
 # Steam : http://steamcommunity.com/id/dogaumexe/
 # Discord : SadDoge.exe#3174
 
-BreakeForce = 5
+if(first()){
+     
+    # SETUP #
+     
+     BreakForce = 5
 
-StartSound_Path = "acf_extra/vehiclefx/starters/starter3.wav"
-HornSound_Path = "acf_extra/vehiclefx/horn/horn0.wav"
+     StartSound_Path = "acf_extra/vehiclefx/starters/starter3.wav"
+     HornSound_Path = "acf_extra/vehiclefx/horn/horn0.wav"
+
+    # SETUP #
+
+    hint("ACF Doggo v3.2 (Last Build) By SadDoge.exe", 5)
+    owner():soundPlay(0,1,"buttons/bell1.wav")
+}
+
 
 W = Pod["W",number]
 S = Pod["S",number]
@@ -30,59 +41,49 @@ Space = Pod["Space",number]
 Alt = Pod["Alt",number]
 Start = Pod["R",number]
 
-if(first()){hint("ACF Doggo v3.2 (Last Build) By SadDoge.exe", 5),owner():soundPlay(0,1,"buttons/bell1.wav")}
 
-# ========================== Gear =================================
+
+# ========================== Gear ================================== #
  
-if(W == 1)
-{ 
+if(W == 1){ 
    if(Gear == 6) { Gear = 1 Throttle = 100 } else { Throttle = 100 }
 }
-else
-{ 
+else{ 
    Throttle = 0
 }
  
-if(S == 1)
-{ 
+if(S == 1){ 
    Gear = 6 Throttle = 100
 }
 
-# ========================= Start Engine ============================
+# ========================= Start Engine ============================ #
 
-if (changed(Start) & Start)
-{
-    if( On )
-{
+if (changed(Start) & Start){
+    if( On ){
      On = 0
-}
-else
-{
+    }
+else{
      Engine:soundPlay("Engine",0,StartSound_Path)
      timer("EngineOn",1100)
  }
 }
 
-if( clk("EngineOn") )
-{
+if( clk("EngineOn") ){
     soundStop("Engine")
     On = 1
 }
 
-# ======================== Horn ==================================
+# ======================== Horn ==================================== #
 
-if( changed(Alt) & Alt )
-{
+if( changed(Alt) & Alt ){
     Engine:soundPlay(3,0,HornSound_Path)
 }
 
-# ======================== Breake ===================================
+# ======================== Break =================================== # 
 
-if(Space)
-{
-   Brake=BreakeForce
+if(Space){
+   Brake=BreakForce
 }
-else
-{
+else{
    Brake=0
 }
