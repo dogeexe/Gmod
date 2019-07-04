@@ -1,18 +1,12 @@
-@name Basic holo Functions
-@inputs
-@outputs
-@persist
-
-interval(100)
+@name Basic holo example
 
 if(first()){
 
-  holoCreate(1)
-  holoModel(1,"Model directory here")
-  holoScale(1,vec(1,1,1)) 
-  holoColor(1,vec(255,255,255))
-  holoPos(1,entity():toWorld(vec(0,0,0)))
-  holoAng(1,entity():toWorld(ang(0,0,0)))
-  holoParent(1,entity())
+  holoCreate(1, entity():toWorld(vec(0,0,0))
+  holoModel(1,"you may enter the model path here")
+  holoScale(1,vec(1,1,1)) # multiplies the scale of the holo in the x,y,z axis 
+  holoColor(1,vec(255,255,255)) # just change it to pink
+  holoAng(1,entity():toWorld(ang(0,0,0))) # im have no idea to comment here 
+  holoParent(1,entity()) # uses the generic glua function to parent the holo to a specific entity
 
 }
