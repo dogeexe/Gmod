@@ -1,48 +1,66 @@
 @name Advanced Setang Simple
 @inputs [Base Pod]:wirelink
 @outputs Angle Speed Kek Kek1
-@persist Lock SteeringSpeed SpeedEffect CounterSteer Setang:entity
+@persist Lock SteeringSpeed SpeedEffect CounterSteer Setang:entity Right
 @model models/sprops/rectangles/size_2/rect_12x12x3.mdl
 interval(30)
 
 
 if(first()|dupefinished()){
    
-    Lock=45 #steering lock/max angle
-           #affects SpeedEffect
-    SpeedEffect=800 #how much effect speed has on the steering
-                   #higher value means smaller effect 
-                  #smaller value means higher effect
-    SteeringSpeed=2 #steering speed 
-                   #more is faster
-                  #less is slower
-    CounterSteer=60 #countersteer force
-                   #more makes it less
-                  #less makes it more                
-
+    # SETUP #
     
-      
-                    
-    }
-  Setang=entity()
-    A=Pod["A",number]
-    D=Pod["D",number]   
-#steering angle itself
-	#If its turning backwards but a on the -Base:entity():velL()
-	
-#Speed = toUnit("km/h",Base:entity():vel():length())
-Speed=toUnit("km/h",Base:entity():velL():x())
-Angle += (D-A)*SteeringSpeed
-if(Speed>0){
-Angle += Base:entity():angVel():yaw()/CounterSteer
-}elseif(Speed<0){Angle -= Base:entity():angVel():yaw()/CounterSteer}
+    Lock=45 
+    
+    #steering lock/max angle
+    #affects SpeedEffect
+    
+    SpeedEffect=800 
+    
+    #how much effect speed has on the steering
+    #higher value means smaller effect 
+    #smaller value means higher effect
+		  
+    SteeringSpeed=2 
+    
+    #steering speed 
+    #more is faster
+    #less is slower
+    
+    Right = 1
+    
+    #if the value of the right is equals to 1 then the steering will go to right lol  
+    
+    CounterSteer=60 
+    #countersteer force
+    #more makes it less
+    #less makes it more    
+    
+    Setang=entity()
+}
+    
+    
+A=Pod["A",number]
+D=Pod["D",number]   
 
+
+Speed=toUnit("km/h",Base:entity():velL():x()*Right)
+Angle += (D-A)*SteeringSpeed
+
+if(Speed>0){
+	Angle += Base:entity():angVel():yaw()/CounterSteer
+	
+}elseif(Speed<0){
+	Angle -= Base:entity():angVel():yaw()/CounterSteer
+}
+
+#generic mathf.clamp to clamp the angle
 Angle = clamp(Angle,-Lock,Lock)
 Angle = Angle*(1-Speed/SpeedEffect)
 Kek = Base:entity():angVel():yaw()/CounterSteer
 
 
-#application of steering angle on the plates
+#apply the steering angle
 if (!Setang:isPlayerHolding()){
 Setang:setAng(Base:entity():toWorld(ang(0,-Angle,0)))
 Setang:propFreeze(1)
